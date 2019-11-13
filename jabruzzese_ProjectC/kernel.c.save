@@ -1,0 +1,70 @@
+
+
+void printString(char*);
+void readSector(char*, int);
+void handleInterrupt21(int,int,int,int);
+
+void main() {
+	int startVidMem = 0xb800;
+	int vidMemOffset = 0x0;
+	int white = 0x7;
+	char buffer[512];
+	readSector(buffer, 30);
+	printString(buffer);
+	makeInterrupt21();
+	interrupt(0x21,0,0,0,0);
+	
+	printString("Hello World!!!!\0");
+	
+	while(1);
+}
+
+void printString(char* chars){
+	int index = 0;
+	while (chars[index] != '\0')
+	{
+		int character = chars[index];
+		interrupt(0x10, 0xe*256+character, 0, 0, 0);
+		index++;
+	}
+
+	/*
+	while (*letters != 0x0)
+	{
+		putInMemory(startVidMem,vidMemOffset, *letters);
+		vidMemOffset++;
+		putInMemory(startVidMem, vidMemOffset, white);
+		vidMemOffset++;
+		// advance letters pointer
+		letters++;
+	}
+	*/
+}
+
+
+void readSector(char* buffer, int sector){
+	int rel_sec = sector+1;
+	interrupt(0x13,2*256+1,buffer,0*256+rel_sec, 0*256+0x80);
+}
+
+
+//int div(int a, int b){
+//	int q=0;
+//	while (q*b <=a)
+//	{
+//		q = q+1;
+//	}
+//	return q-1;
+//}
+
+//int mod (int a, int b)
+//{
+//	while(a >= b){
+//	a = a-b;
+//	}
+//	return a;
+//}
+
+void handleInterrupt21(int ax,int bx,int cx, int dx){
+	printString("You cant handle the interrupt");
+}
