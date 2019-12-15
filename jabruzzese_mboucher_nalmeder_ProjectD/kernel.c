@@ -267,7 +267,7 @@ void deleteFile(char* fileName)
 	printChar('a');
 	readSector(map, 1);
 	readSector(dir, 2);
-	
+
 	//search to see if the file name is in the directory
 	for (i = 32; i<38; i++)
 	{
@@ -324,12 +324,12 @@ void writeFile(char* buffer, char* fileName, int numberOfSectors)
 	int i;
 	int j;
 	int num;
-	int dirSector;	
+	int dirSector;
 	int sectorFound = 0;
 	int sect;
 	char buff[512];
 	readSector(map,1);
-	readSector(dir,2);	
+	readSector(dir,2);
 	for(dirSector = 0; dirSector < 16; dirSector++)
 	{
 		if (dir[dirSector*32] == 0x00)
@@ -366,14 +366,13 @@ void writeFile(char* buffer, char* fileName, int numberOfSectors)
 			return;
 		}
 		map[sect] = 0xFF;
-		
+
 		dir[32*dirSector+6+i] = sect;
-		
 		/*for(j = 0; j<512; j++)
 		{
-			num = i+1;	
+			num = i+1;
 			buff[j] = buffer[j*num];
-		}*/	
+		}*/
 		writeSector(buffer, sect);
 	}
 
@@ -392,5 +391,4 @@ void terminate()
 	shellname[4] = 'l';
 	shellname[5] = '\0';
 	executeProgram(shellname);
-	
 }
