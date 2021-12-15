@@ -2,4 +2,4 @@
 
 For anybody wishing to view the finished product, a demo must be requested, as it uses a closed-source simulator.
 
-<h3> Project E folder contains the final product </h3>
+<h3> NA_JA_MB_ProjectE folder contains the final product </h3>
